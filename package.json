@@ -9,8 +9,8 @@
     "dev": "yarn nodemon index.js"
   },
   "dependencies": {
-    "@types/axios": "^0.14.0",
     "axios": "^1.1.3",
+    "cheerio": "^1.0.0-rc.12",
     "express": "^4.17.1",
     "nodemon": "^2.0.9"
   }
