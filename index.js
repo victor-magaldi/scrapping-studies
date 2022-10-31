@@ -1,4 +1,5 @@
 const { json } = require("express");
+const { load } = require("cheerio");
 const express = require("express");
 
 const server = express();
@@ -13,6 +14,7 @@ server.use(express.json());
 
 const cursos = ["nodejs", "javasctipt", "react"];
 
+const url = "http://webcode.me";
 // midleware Global
 // é chamado em todas rotas da sua aplicação
 server.use((req, res, next) => {
@@ -38,7 +40,7 @@ function checkIndexCurso(req, res, next) {
 }
 
 server.get("/cursos", function (req, res) {
-  console.log("req", req)
+  console.log("req", req);
   return res.json({ cursos: cursos });
 });
 
@@ -57,7 +59,7 @@ server.get("/cursos/:id", checkIndexCurso, function (req, res) {
 server.post("/cursos", checkCurso, function (req, res) {
   const { name } = req.body;
 
-  console.log("teste")
+  console.log("teste");
   cursos.push(name);
   return res.json({ cursos: cursos });
 });
