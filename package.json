@@ -1,0 +1,15 @@
+{
+  "name": "studies-node",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/victor-magaldi/node-api-studies.git",
+  "author": "Victor de Souza Magaldi <victmagaldi@hotmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "yarn nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.9"
+  }
+}
