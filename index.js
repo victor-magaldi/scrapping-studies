@@ -1,6 +1,7 @@
-const { json } = require("express");
-const { load } = require("cheerio");
 const express = require("express");
+const { load } = require("cheerio");
+
+const axios = require("axios");
 
 const server = express();
 server.listen(3000);
@@ -22,6 +23,13 @@ server.use((req, res, next) => {
 });
 
 server.get("/", function (req, res) {
-  console.log("req", req);
-  return res.json({ cursos: cursos });
+  let $;
+  axios
+    .get("https://www.google.com/")
+    .then((res) => {
+      $ = load(res.data);
+      console.log("teste", $("title").text());
+    })
+    .catch((err) => console.error(err));
+  return res.json({ cursos: "res.data " });
 });
