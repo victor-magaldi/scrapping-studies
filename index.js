@@ -26,8 +26,15 @@ server.get("/get-title", async (req, res) => {
   //http://localhost:3000/get-title?url=https%3A%2F%2Fwww.google.com%2F
   const { url } = req.query;
 
-  const request = await axios.get(url);
-  const $ = load(request.data);
-  const title = $("title").text();
-  return res.json({ titleWebSite: title });
+  try {
+    const request = await axios.get(url);
+    const $ = load(request.data);
+    const title = $("title").text();
+
+    return res.status(200).json({ titleWebSite: title });
+  } catch (e) {
+    console.error("error==>", e);
+
+    return res.status(500).json({ error: "error interno" });
+  }
 });
