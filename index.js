@@ -21,63 +21,7 @@ server.use((req, res, next) => {
   return next();
 });
 
-// -----------------MIDLEWAREs
-
-// barra a request se o cliente não enviar o campo name
-function checkCurso(req, res, next) {
-  if (!req.body.name) {
-    return res.status(400).json({ error: "nome do curso é obrigatório" });
-  }
-  return next();
-}
-function checkIndexCurso(req, res, next) {
-  const curso = cursos[req.params.index];
-  if (!curso) {
-    return res.status(400).json({ error: "o curso não existe" });
-  }
-  req.curso = curso;
-  return next();
-}
-
-server.get("/cursos", function (req, res) {
+server.get("/", function (req, res) {
   console.log("req", req);
-  return res.json({ cursos: cursos });
-});
-
-// READ
-server.get("/cursos/:id", checkIndexCurso, function (req, res) {
-  // http://localhost:3000/curso/4?name=victor
-  console.log(req.query.name); // victor
-  console.log(req.params.id); //4
-
-  const { id } = req.params;
-
-  return res.json({ curso: cursos[id] });
-});
-
-// CREATE
-server.post("/cursos", checkCurso, function (req, res) {
-  const { name } = req.body;
-
-  console.log("teste");
-  cursos.push(name);
-  return res.json({ cursos: cursos });
-});
-
-// UPDATE
-server.put("/cursos/:index", checkCurso, checkIndexCurso, function (req, res) {
-  const { index } = req.params;
-  const { name } = req.body;
-  cursos[index] = name;
-
-  return res.json({ cursos: cursos });
-});
-
-// DELETE
-server.delete("/cursos/:index", function (req, res) {
-  const { index } = req.params;
-
-  cursos.splice(index, 1);
-
   return res.json({ cursos: cursos });
 });
