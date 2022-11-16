@@ -22,14 +22,12 @@ server.use((req, res, next) => {
   return next();
 });
 
-server.get("/", function (req, res) {
-  let $;
-  axios
-    .get("https://www.google.com/")
-    .then((res) => {
-      $ = load(res.data);
-      console.log("teste", $("title").text());
-    })
-    .catch((err) => console.error(err));
-  return res.json({ cursos: "res.data " });
+server.get("/get-title", async (req, res) => {
+  //http://localhost:3000/get-title?url=https%3A%2F%2Fwww.google.com%2F
+  const { url } = req.query;
+
+  const request = await axios.get(url);
+  const $ = load(request.data);
+  const title = $("title").text();
+  return res.json({ titleWebSite: title });
 });
