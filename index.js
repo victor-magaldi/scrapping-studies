@@ -38,3 +38,19 @@ server.get("/get-title", async (req, res) => {
     return res.status(500).json({ error: "error interno" });
   }
 });
+server.get("/get-metatags", async (req, res) => {
+  //http://localhost:3000/get-title?url=https%3A%2F%2Fwww.google.com%2F
+  const { url } = req.query;
+
+  try {
+    const request = await axios.get(url);
+    const $ = load(request.data);
+    const metaTags = $("meta");
+    console.log("teste=====>", $("meta"));
+    return res.status(200).json({ metaTags: String(metaTags) });
+  } catch (e) {
+    console.error("error==>", e);
+
+    return res.status(500).json({ error: "error interno" });
+  }
+});
