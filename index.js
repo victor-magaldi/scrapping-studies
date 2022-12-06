@@ -54,3 +54,19 @@ server.get("/get-metatags", async (req, res) => {
     return res.status(500).json({ error: "error interno" });
   }
 });
+server.get("/search-google", async (req, res) => {
+  //http://localhost:3000/search-google?term=https%3A%2F%2Fwww.google.com%2F
+  const { term } = req.query;
+
+  try {
+    const request = await axios.get("https://www.google.com/search??q=" + term);
+    const $ = load(request.data);
+    const body = $("body");
+
+    return res.status(200).json({ body: String(body) });
+  } catch (e) {
+    console.error("error==>", e);
+
+    return res.status(500).json({ error: "error interno" });
+  }
+});
