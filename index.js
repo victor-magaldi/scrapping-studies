@@ -56,14 +56,19 @@ server.get("/get-metatags", async (req, res) => {
 });
 server.get("/search-google", async (req, res) => {
   //http://localhost:3000/search-google?term=https%3A%2F%2Fwww.google.com%2F
-  const { term } = req.query;
 
   try {
-    const request = await axios.get("https://www.google.com/search??q=" + term);
+    const request = await axios.get("https://g1.globo.com/");
     const $ = load(request.data);
-    const body = $("body");
+    const posts = $(".type-materia");
+    const noticiesTitles = [];
 
-    return res.status(200).json({ body: String(body) });
+    posts.each((i, el) => {
+      console.log("teste", $(el).find(".gui-subject"));
+      noticiesTitles.push($(el).text());
+    });
+
+    return res.status(200).json({ body: noticiesTitles });
   } catch (e) {
     console.error("error==>", e);
 
