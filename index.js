@@ -87,8 +87,12 @@ server.get("/metacritic", async (req, res) => {
     const gamesArray = [];
     games.each((i, elem) => {
       const nameEl = $(elem).text();
-      console.log("nameEl", nameEl);
-      if (nameEl) gamesArray.push(nameEl.trim());
+      const formatString = nameEl
+        .replaceAll("&amp;", "&")
+        .replaceAll("\n", "")
+        .trim();
+
+      if (nameEl) gamesArray.push(formatString);
     });
 
     return res.status(200).json({ body: gamesArray });
