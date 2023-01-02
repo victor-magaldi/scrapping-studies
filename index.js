@@ -75,3 +75,26 @@ server.get("/search-google", async (req, res) => {
     return res.status(500).json({ error: "error interno" });
   }
 });
+
+server.get("/metacritic", async (req, res) => {
+  //https://www.metacritic.com/
+
+  try {
+    const request = await axios.get("https://www.metacritic.com/game");
+    const $ = load(request.data);
+    const wrapgames = $(".partial_holder .body_wrap ");
+    const games = wrapgames.find("tr .title h3");
+    const gamesArray = [];
+    games.each((i, elem) => {
+      const nameEl = $(elem).text();
+      console.log("nameEl", nameEl);
+      if (nameEl) gamesArray.push(nameEl.trim());
+    });
+
+    return res.status(200).json({ body: gamesArray });
+  } catch (e) {
+    console.error("error==>", e);
+
+    return res.status(500).json({ error: "error interno" });
+  }
+});
