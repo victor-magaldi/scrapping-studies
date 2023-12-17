@@ -46,7 +46,6 @@ server.get("/get-metatags", async (req, res) => {
     const request = await axios.get(url);
     const $ = load(request.data);
     const metaTags = $("meta");
-    console.log("teste=====>", $("meta"));
     return res.status(200).json({ metaTags: String(metaTags) });
   } catch (e) {
     console.error("error==>", e);
@@ -64,7 +63,6 @@ server.get("/search-google", async (req, res) => {
     const noticiesTitles = [];
 
     posts.each((i, el) => {
-      console.log("teste", $(el).find(".gui-subject"));
       noticiesTitles.push($(el).text());
     });
 
