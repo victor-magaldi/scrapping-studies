@@ -1,7 +1,12 @@
 const express = require("express");
 const { load } = require("cheerio");
-
 const axios = require("axios");
+var cron = require("node-cron");
+
+cron.schedule("*/1 * * * *", () => {
+  const timeDispatch = new Date();
+  console.log(`Task running in: ${timeDispatch.toLocaleString()}`);
+});
 
 const server = express();
 server.listen(3000);
